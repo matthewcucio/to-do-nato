@@ -12,9 +12,9 @@ namespace Todoapp.Controllers
 {
     public class ToDoItemModelsController : Controller
     {
-        private readonly TodoappContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ToDoItemModelsController(TodoappContext context)
+        public ToDoItemModelsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -22,7 +22,7 @@ namespace Todoapp.Controllers
         // GET: ToDoItemModels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ToDoItemModel.ToListAsync());
+            return View(await _context.ToDoItemModels.ToListAsync());
         }
 
         // GET: ToDoItemModels/Details/5
@@ -33,7 +33,7 @@ namespace Todoapp.Controllers
                 return NotFound();
             }
 
-            var toDoItemModel = await _context.ToDoItemModel
+            var toDoItemModel = await _context.ToDoItemModels
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (toDoItemModel == null)
             {
@@ -54,7 +54,7 @@ namespace Todoapp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,IsCompleted,CreatedAt,DueDate")] ToDoItemModel toDoItemModel)
+        public async Task<IActionResult> Create([Bind("Id,Title,IsCompleted")] ToDoItemModel toDoItemModel)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Todoapp.Controllers
                 return NotFound();
             }
 
-            var toDoItemModel = await _context.ToDoItemModel.FindAsync(id);
+            var toDoItemModel = await _context.ToDoItemModels.FindAsync(id);
             if (toDoItemModel == null)
             {
                 return NotFound();
@@ -86,7 +86,7 @@ namespace Todoapp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,IsCompleted,CreatedAt,DueDate")] ToDoItemModel toDoItemModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsCompleted")] ToDoItemModel toDoItemModel)
         {
             if (id != toDoItemModel.Id)
             {
@@ -124,7 +124,7 @@ namespace Todoapp.Controllers
                 return NotFound();
             }
 
-            var toDoItemModel = await _context.ToDoItemModel
+            var toDoItemModel = await _context.ToDoItemModels
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (toDoItemModel == null)
             {
@@ -139,10 +139,10 @@ namespace Todoapp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var toDoItemModel = await _context.ToDoItemModel.FindAsync(id);
+            var toDoItemModel = await _context.ToDoItemModels.FindAsync(id);
             if (toDoItemModel != null)
             {
-                _context.ToDoItemModel.Remove(toDoItemModel);
+                _context.ToDoItemModels.Remove(toDoItemModel);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace Todoapp.Controllers
 
         private bool ToDoItemModelExists(int id)
         {
-            return _context.ToDoItemModel.Any(e => e.Id == id);
+            return _context.ToDoItemModels.Any(e => e.Id == id);
         }
     }
 }

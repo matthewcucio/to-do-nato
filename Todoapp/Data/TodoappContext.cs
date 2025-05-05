@@ -7,13 +7,13 @@ using Todoapp.Models;
 
 namespace Todoapp.Data
 {
-    public class TodoappContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public TodoappContext (DbContextOptions<TodoappContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Todoapp.Models.ToDoItemModel> ToDoItemModel { get; set; } = default!;
+        public DbSet<ToDoItemModel> ToDoItemModels { get; set; }
     }
 }

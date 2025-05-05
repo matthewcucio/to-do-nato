@@ -2,8 +2,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Todoapp.Data;
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<TodoappContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TodoappContext") ?? throw new InvalidOperationException("Connection string 'TodoappContext' not found.")));
+// Add services to the container. ETO UNG ERROR
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
