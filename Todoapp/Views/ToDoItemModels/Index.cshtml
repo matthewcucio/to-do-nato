@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Your To Do List</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsCompleted)
+                @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
                 Deadline
@@ -31,14 +31,10 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsCompleted)
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 @item.Deadline?.ToString("g")
-                    public async Task<IActionResult> Index()
-                    {
-                        return View(await _context.ToDoItemModels.ToListAsync());
-                    }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
