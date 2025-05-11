@@ -35,6 +35,10 @@
             </td>
             <td>
                 @item.Deadline?.ToString("g")
+                    public async Task<IActionResult> Index()
+                    {
+                        return View(await _context.ToDoItemModels.ToListAsync());
+                    }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

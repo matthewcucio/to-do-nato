@@ -7,17 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Todoapp.Data;
 using Todoapp.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Todoapp.Controllers
 {
     public class ToDoItemModelsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ToDoItemModelsController> _logger;
 
-        public ToDoItemModelsController(ApplicationDbContext context)
+        public ToDoItemModelsController(ApplicationDbContext context, ILogger<ToDoItemModelsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
+
 
         // GET: ToDoItemModels
         public async Task<IActionResult> Index()
@@ -54,7 +58,7 @@ namespace Todoapp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,IsCompleted,Deadline")] ToDoItemModel toDoItemModel)
+        public async Task<IActionResult> Create([Bind("Id,Title,IsCompleted,Deadline,Description")] ToDoItemModel toDoItemModel)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +90,7 @@ namespace Todoapp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsCompleted,Deadline")] ToDoItemModel toDoItemModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,IsCompleted,Deadline,Description")] ToDoItemModel toDoItemModel)
         {
             if (id != toDoItemModel.Id)
             {
@@ -97,6 +101,10 @@ namespace Todoapp.Controllers
             {
                 try
                 {
+                    // Log the updated Deadline value
+                    _logger.LogInformation("Updated Deadline: {Deadline}", toDoItemModel.Deadline);
+
+                    // Update the entity in the database
                     _context.Update(toDoItemModel);
                     await _context.SaveChangesAsync();
                 }
@@ -115,6 +123,7 @@ namespace Todoapp.Controllers
             }
             return View(toDoItemModel);
         }
+
 
         // GET: ToDoItemModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
