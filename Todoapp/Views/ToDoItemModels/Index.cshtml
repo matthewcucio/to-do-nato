@@ -106,11 +106,49 @@
         opacity: 0.6;
     }
 
-        .completed-task td a {
-            text-decoration: none;
-        }
+    .completed-task td a {
+        text-decoration: none;
+    }
 
-    .btn-primary:hover, .btn-success:hover, .btn-danger:hover, .btn-outline-light:hover {
-        filter: brightness(0.85);
+    /* Slight glow for primary (blue) buttons */
+    .btn-primary, .btn-primary:focus {
+        box-shadow: 0 0 6px 1px #2563eb55;
+        border-color: #2563eb;
+    }
+    .btn-primary:hover {
+        filter: brightness(1.05);
+        box-shadow: 0 0 10px 2px #2563eb88;
+    }
+
+    /* Slight glow for success (green) buttons */
+    .btn-success, .btn-success:focus {
+        box-shadow: 0 0 6px 1px #05966955;
+        border-color: #059669;
+    }
+    .btn-success:hover {
+        filter: brightness(1.05);
+        box-shadow: 0 0 10px 2px #05966988;
+    }
+
+    /* Slight glow for danger (red) buttons */
+    .btn-danger, .btn-danger:focus {
+        box-shadow: 0 0 6px 1px #dc262655;
+        border-color: #dc2626;
+    }
+    .btn-danger:hover {
+        filter: brightness(1.05);
+        box-shadow: 0 0 10px 2px #dc262688;
+    }
+
+    /* Slight glow for outline-light (white) buttons */
+    .btn-outline-light, .btn-outline-light:focus {
+        box-shadow: 0 0 6px 1px #ffffff55;
+        border-color: #fff;
+    }
+    .btn-outline-light:hover {
+        filter: brightness(1.05);
+        box-shadow: 0 0 10px 2px #ffffff88;
+        background: #fff !important;
+        color: #232526 !important;
     }
 </style>

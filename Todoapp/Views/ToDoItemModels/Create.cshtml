@@ -4,8 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<!-- Dark gradient background for the whole page -->
-<div class="min-vh-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #232526 0%, #414345 100%);">
+<style>
+    body {
+        background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
+        min-height: 100vh;
+    }
+</style>
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
     <div class="card shadow-lg bg-dark text-light w-100" style="max-width: 500px;">
         <div class="card-body">
             <h1 class="card-title text-center mb-4">Create</h1>
@@ -25,7 +31,7 @@
                 </div>
                 <div class="mb-3">
                     <label asp-for="Deadline" class="form-label">Deadline</label>
-                    <input asp-for="Deadline" class="form-control bg-secondary text-light border-0" type="datetime-local" />
+                    <input asp-for="Deadline" class="form-control bg-secondary text-light border-0" id="deadlinePicker" />
                     <span asp-validation-for="Deadline" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
@@ -50,4 +56,15 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/confirmDate/confirmDate.css">
+    <script>
+        flatpickr("#deadlinePicker", {
+            enableTime: true,
+            dateFormat: "Y-m-d\\   H:i",
+            plugins: [new confirmDatePlugin({})]
+        });
+    </script>
 }

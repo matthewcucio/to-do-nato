@@ -4,37 +4,76 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<style>
+    body {
+        background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
+        min-height: 100vh;
+    }
 
-<div>
-    <h4>ToDoItemModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Deadline)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Deadline)
-            </dd>
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-            <div>
+    /* Subtle glow for the green title */
+    .glow-green {
+        color: #22c55e;
+        text-shadow: 0 0 6px #22c55e88, 0 0 12px #22c55e44;
+    }
+
+    /* Subtle glow for primary (blue) buttons */
+    .btn-primary, .btn-primary:focus {
+        box-shadow: 0 0 6px 1px #2563eb55;
+        border-color: #2563eb;
+    }
+
+        .btn-primary:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 0 10px 2px #2563eb88;
+        }
+
+    /* Subtle glow for outline-light (white) buttons */
+    .btn-outline-light, .btn-outline-light:focus {
+        box-shadow: 0 0 6px 1px #ffffff55;
+        border-color: #fff;
+    }
+
+        .btn-outline-light:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 0 10px 2px #ffffff88;
+            background: #fff !important;
+            color: #232526 !important;
+        }
+</style>
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg bg-dark text-light w-100" style="max-width: 500px;">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4 glow-green">Details</h1>
+            <hr class="border-secondary" />
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Deadline)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Deadline)
+                </dd>
+            </dl>
+            <div class="mb-4">
                 <h4>Description</h4>
                 <p>@Model.Description</p>
             </div>
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+            <div class="d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Index" class="btn btn-outline-light">Back to List</a>
+            </div>
+        </div>
+    </div>
 </div>
