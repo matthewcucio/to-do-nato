@@ -22,6 +22,37 @@ namespace Todoapp.Controllers
             _logger = logger;
         }
 
+        // --- ADD THIS DTO CLASS FOR AJAX STATUS UPDATE ---
+        public class StatusUpdateDto
+        {
+            public string Status { get; set; }
+        }
+
+        // --- ADD THIS ENDPOINT FOR AJAX STATUS UPDATE ---
+        [HttpPost]
+        [IgnoreAntiforgeryToken] // For AJAX, or handle the token properly
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] StatusUpdateDto dto)
+        {
+            var item = await _context.ToDoItemModels.FindAsync(id);
+            if (item == null) return NotFound();
+
+            if (!Enum.TryParse<Status>(dto.Status, out var newStatus))
+                return BadRequest("Invalid status value.");
+
+            item.Status = newStatus;
+            await _context.SaveChangesAsync();
+            return Json(new { success = true });
+        }
+
+        // --- ADD THIS ENDPOINT FOR CLEAR ALL ---
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ClearAll()
+        {
+            _context.ToDoItemModels.RemoveRange(_context.ToDoItemModels);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
         // GET: ToDoItemModels
         public async Task<IActionResult> Index()
@@ -54,8 +85,6 @@ namespace Todoapp.Controllers
         }
 
         // POST: ToDoItemModels/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,Status,Deadline,Description")] ToDoItemModel toDoItemModel)
@@ -86,8 +115,6 @@ namespace Todoapp.Controllers
         }
 
         // POST: ToDoItemModels/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Status,Deadline,Description")] ToDoItemModel toDoItemModel)
@@ -101,10 +128,7 @@ namespace Todoapp.Controllers
             {
                 try
                 {
-                    // Log the updated Deadline value
                     _logger.LogInformation("Updated Deadline: {Deadline}", toDoItemModel.Deadline);
-
-                    // Update the entity in the database
                     _context.Update(toDoItemModel);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +147,6 @@ namespace Todoapp.Controllers
             }
             return View(toDoItemModel);
         }
-
 
         // GET: ToDoItemModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
