@@ -9,6 +9,45 @@
         background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
         min-height: 100vh;
     }
+
+    /* Make the main title bold */
+    .card-title {
+        font-weight: bold;
+    }
+
+    /* Make all form labels bold */
+    .form-label {
+        font-weight: bold !important;
+    }
+
+    /* Slight glow for primary (blue) buttons */
+    .btn-primary, .btn-primary:focus {
+        box-shadow: 0 0 6px 1px #2563eb55;
+        border-color: #2563eb;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            filter: brightness(1.18);
+            background-color: #3b82f6 !important;
+            box-shadow: 0 0 14px 4px #3b82f6bb;
+        }
+
+    /* Slight glow for outline-light (white) buttons */
+    .btn-outline-light, .btn-outline-light:focus {
+        box-shadow: 0 0 6px 1px #ffffff55;
+        border-color: #fff;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-outline-light:hover {
+            filter: brightness(1.18);
+            box-shadow: 0 0 14px 4px #ffffffbb;
+            background: #fff !important;
+            color: #232526 !important;
+        }
 </style>
 
 <div class="min-vh-100 d-flex align-items-center justify-content-center">

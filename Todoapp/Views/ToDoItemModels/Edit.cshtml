@@ -14,28 +14,39 @@
     .glow-blue {
         color: #2563eb;
         text-shadow: 0 0 6px #2563eb88, 0 0 12px #2563eb44;
+        font-weight: bold;
     }
 
-    /* Subtle glow for primary (blue) buttons */
+    /* Make form labels bold */
+    .form-label {
+        font-weight: bold !important;
+    }
+
+    /* Slight glow for primary (blue) buttons */
     .btn-primary, .btn-primary:focus {
         box-shadow: 0 0 6px 1px #2563eb55;
         border-color: #2563eb;
+        background-color: #2563eb;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
     }
 
         .btn-primary:hover {
-            filter: brightness(1.05);
-            box-shadow: 0 0 10px 2px #2563eb88;
+            filter: brightness(1.18);
+            background-color: #3b82f6 !important; /* Slightly brighter blue */
+            box-shadow: 0 0 14px 4px #3b82f6bb;
         }
 
-    /* Subtle glow for outline-light (white) buttons */
+    /* Slight glow for outline-light (white) buttons */
     .btn-outline-light, .btn-outline-light:focus {
         box-shadow: 0 0 6px 1px #ffffff55;
         border-color: #fff;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+        font-weight: bold;
     }
 
         .btn-outline-light:hover {
-            filter: brightness(1.05);
-            box-shadow: 0 0 10px 2px #ffffff88;
+            filter: brightness(1.15);
+            box-shadow: 0 0 12px 3px #ffffff99;
             background: #fff !important;
             color: #232526 !important;
         }
