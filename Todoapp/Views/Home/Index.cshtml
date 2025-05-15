@@ -2,7 +2,61 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    body {
+        background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
+        min-height: 100vh;
+    }
+
+    .home-card {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #181a1b;
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px 0 #00000040;
+        padding: 2.5rem 2rem;
+    }
+
+    .glow-blue {
+        color: #2563eb;
+        text-shadow: 0 0 6px #2563eb88, 0 0 12px #2563eb44;
+        font-weight: bold;
+    }
+
+    .lead {
+        color: #e0e7ef;
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .btn-primary, .btn-primary:focus {
+        box-shadow: 0 0 6px 1px #2563eb55;
+        border-color: #2563eb;
+        background-color: #2563eb;
+        font-weight: bold;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+
+        .btn-primary:hover {
+            filter: brightness(1.18);
+            background-color: #3b82f6 !important;
+            box-shadow: 0 0 14px 4px #3b82f6bb;
+        }
+</style>
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="home-card text-center text-light">
+        <h1 class="glow-blue mb-4">Welcome to Your To Do App</h1>
+        <p class="lead">
+            Organize your tasks, stay productive, and never miss a deadline.<br />
+            This app lets you create, edit, and manage your personal to-do list with a modern, easy-to-use interface.
+        </p>
+        <a asp-controller="ToDoItemModels" asp-action="Index" class="btn btn-primary btn-lg mt-3">
+            Go to To Do List
+        </a>
+        <hr class="border-secondary my-4" />
+        <p class="mb-0" style="color:#b0b8c1;">
+            Built with <span style="color:#3b82f6;font-weight:bold;">ASP.NET Core MVC</span> &mdash; .NET 8
+        </p>
+    </div>
 </div>
