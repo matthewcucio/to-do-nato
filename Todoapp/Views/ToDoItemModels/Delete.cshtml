@@ -9,12 +9,42 @@
         background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
         min-height: 100vh;
     }
+
+    /* Subtle red glow for the title */
+    .glow-red {
+        color: #ef4444;
+        text-shadow: 0 0 6px #ef444488, 0 0 12px #ef444444;
+    }
+
+    /* Subtle glow for danger (red) buttons */
+    .btn-danger, .btn-danger:focus {
+        box-shadow: 0 0 6px 1px #dc262655;
+        border-color: #dc2626;
+    }
+
+        .btn-danger:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 0 10px 2px #dc262688;
+        }
+
+    /* Subtle glow for outline-light (white) buttons */
+    .btn-outline-light, .btn-outline-light:focus {
+        box-shadow: 0 0 6px 1px #ffffff55;
+        border-color: #fff;
+    }
+
+        .btn-outline-light:hover {
+            filter: brightness(1.05);
+            box-shadow: 0 0 10px 2px #ffffff88;
+            background: #fff !important;
+            color: #232526 !important;
+        }
 </style>
 
 <div class="min-vh-100 d-flex align-items-center justify-content-center">
     <div class="card shadow-lg bg-dark text-light w-100" style="max-width: 500px;">
         <div class="card-body">
-            <h1 class="card-title text-center mb-4 text-danger">Delete</h1>
+            <h1 class="card-title text-center mb-4 glow-red">Delete</h1>
             <h3 class="text-center mb-4">Are you sure you want to delete this?</h3>
             <hr class="border-secondary" />
             <dl class="row">

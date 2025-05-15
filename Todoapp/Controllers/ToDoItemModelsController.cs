@@ -22,13 +22,13 @@ namespace Todoapp.Controllers
             _logger = logger;
         }
 
-        // --- ADD THIS DTO CLASS FOR AJAX STATUS UPDATE ---
+        // --- DTO CLASS FOR AJAX STATUS UPDATE ---
         public class StatusUpdateDto
         {
             public string Status { get; set; }
         }
 
-        // --- ADD THIS ENDPOINT FOR AJAX STATUS UPDATE ---
+        // --- ENDPOINT FOR AJAX STATUS UPDATE ---
         [HttpPost]
         [IgnoreAntiforgeryToken] // For AJAX, or handle the token properly
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] StatusUpdateDto dto)
@@ -44,7 +44,7 @@ namespace Todoapp.Controllers
             return Json(new { success = true });
         }
 
-        // --- ADD THIS ENDPOINT FOR CLEAR ALL ---
+        // --- ENDPOINT FOR CLEAR ALL ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearAll()
