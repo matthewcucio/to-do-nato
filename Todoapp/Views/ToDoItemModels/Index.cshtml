@@ -4,77 +4,80 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Your To Do List</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th></th> <!-- Checkbox column -->
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                Deadline
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="@(item.Status == Todoapp.Models.Status.Completed ? "completed-task" : "")">
-                <td>
-                    <input type="checkbox" class="status-checkbox" data-id="@item.Id" @(item.Status == Todoapp.Models.Status.Completed ? "checked" : "") />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @item.Deadline?.ToString("g")
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-
-</table>
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg bg-dark text-light w-100" style="max-width: 900px;">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">Your To Do List</h1>
+            <div class="row mb-3">
+                <div class="col text-start">
+                    <a asp-action="Create" class="btn btn-primary btn-lg" style="transition: background 0.2s;">Create New</a>
+                </div>
+                <div class="col text-end">
+                    <form asp-action="ClearAll" method="post" id="clearAllForm" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-lg" style="transition: background 0.2s;">Clear All</button>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>@Html.DisplayNameFor(model => model.Title)</th>
+                            <th>@Html.DisplayNameFor(model => model.Status)</th>
+                            <th>Deadline</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="@(item.Status == Todoapp.Models.Status.Completed ? "completed-task" : "")">
+                                <td>
+                                    <input type="checkbox" class="status-checkbox form-check-input"
+                                           data-id="@item.Id"
+                                           @(item.Status == Todoapp.Models.Status.Completed ? "checked" : "") />
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>@item.Deadline?.ToString("g")</td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
+        // Checkbox status update
         document.querySelectorAll('.status-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', function () {
                 const taskId = this.getAttribute('data-id');
                 const isChecked = this.checked;
-
-                // Update the row's appearance dynamically
                 const row = this.closest('tr');
                 if (isChecked) {
                     row.classList.add('completed-task');
                 } else {
                     row.classList.remove('completed-task');
                 }
-
-                // Send the status update to the server
                 fetch(`/ToDoItemModels/UpdateStatus/${taskId}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
                     },
-                    body: JSON.stringify({ status: isChecked ? 'Completed' : 'NotStarted' })
+                    body: JSON.stringify({ status: isChecked ? 'Completed' : 'Ongoing' })
                 }).then(response => {
                     if (!response.ok) {
                         alert('Failed to update status.');
@@ -82,18 +85,32 @@
                 });
             });
         });
+
+        // Clear All confirmation
+        document.getElementById('clearAllForm').addEventListener('submit', function (e) {
+            if (!confirm('Are you sure you want to clear all to-do items? This action cannot be undone.')) {
+                e.preventDefault();
+            }
+        });
     </script>
 }
 
-
 <style>
+    body {
+        background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
+        min-height: 100vh;
+    }
+
     .completed-task td {
         text-decoration: line-through;
         opacity: 0.6;
     }
 
         .completed-task td a {
-            text-decoration: none; /* Ensure links do not have a strikethrough */
+            text-decoration: none;
         }
-</style>
 
+    .btn-primary:hover, .btn-success:hover, .btn-danger:hover, .btn-outline-light:hover {
+        filter: brightness(0.85);
+    }
+</style>
