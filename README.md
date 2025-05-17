@@ -9,6 +9,10 @@ This is a simple To-Do list application built using ASP.NET MVC and C#. The app 
 - Mark as Completed: Users can mark tasks as completed and view them separately. ✅
 - Task Management: Simple management system for tasks stored in memory or a database. 🔄
 
+# 🏗️ MVC Architecture
+
+    Model: Represents the To-Do task object with properties like ID, Title, Description, and IsCompleted.
+    
 # 📂 Project Structure
 - Controllers: Contains the main controller (HomeController.cs) that handles all the user requests. 🧑‍💻
 - Models: Contains the Task model (Task.cs). 🏷️
