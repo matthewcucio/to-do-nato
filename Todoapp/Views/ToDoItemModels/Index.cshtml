@@ -51,6 +51,7 @@
                     <option value="">Sort by...</option>
                     <option value="category" selected="@(currentSort == "category")">Category</option>
                     <option value="priority" selected="@(currentSort == "priority")">Priority</option>
+                    <option value="date" selected="@(currentSort == "date")">Date</option>
                 </select>
                 <button type="submit" class="btn btn-glow-apply mx-1">Apply</button>
             </form>
@@ -80,7 +81,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.Status)</td>
                                 <td>@item.Category</td>
                                 <td>@item.Priority</td>
-                                <td>@item.Deadline?.ToString("g")</td>
+                                <td>@item.Deadline?.ToString("yyyy-MM-dd")</td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" style="font-weight:bold;">Edit</a>

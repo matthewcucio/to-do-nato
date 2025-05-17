@@ -66,6 +66,7 @@ namespace Todoapp.Controllers
             {
                 "category" => items.OrderBy(t => t.Category),
                 "priority" => items.OrderBy(t => t.Priority),
+                "date" => items.OrderBy(t => t.Deadline.HasValue ? t.Deadline.Value.Date : DateTime.MaxValue),
                 _ => items.OrderBy(t => t.Id)
             };
 
