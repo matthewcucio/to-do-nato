@@ -10,19 +10,16 @@
         min-height: 100vh;
     }
 
-    /* Subtle red glow for the title */
     .glow-red {
         color: #ef4444;
         text-shadow: 0 0 6px #ef444488, 0 0 12px #ef444444;
         font-weight: bold;
     }
 
-    /* Make table headers bold */
     th, .details-label {
         font-weight: bold !important;
     }
 
-    /* Slight glow for danger (red) buttons */
     .btn-danger, .btn-danger:focus {
         box-shadow: 0 0 6px 1px #dc262655;
         border-color: #dc2626;
@@ -36,7 +33,6 @@
             box-shadow: 0 0 14px 4px #ef4444bb;
         }
 
-    /* Slight glow for outline-light (white) buttons */
     .btn-outline-light, .btn-outline-light:focus {
         box-shadow: 0 0 6px 1px #ffffff55;
         border-color: #fff;
@@ -66,10 +62,28 @@
                     @Html.DisplayFor(model => model.Title)
                 </dd>
                 <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Priority)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Priority)
+                </dd>
+                <dt class="col-sm-4 details-label">
                     @Html.DisplayNameFor(model => model.Status)
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Status)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Deadline)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Deadline)
                 </dd>
             </dl>
             <form asp-action="Delete" class="mt-4">

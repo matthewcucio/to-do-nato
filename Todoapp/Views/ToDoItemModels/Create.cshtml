@@ -10,17 +10,14 @@
         min-height: 100vh;
     }
 
-    /* Make the main title bold */
     .card-title {
         font-weight: bold;
     }
 
-    /* Make all form labels bold */
     .form-label {
         font-weight: bold !important;
     }
 
-    /* Slight glow for primary (blue) buttons */
     .btn-primary, .btn-primary:focus {
         box-shadow: 0 0 6px 1px #2563eb55;
         border-color: #2563eb;
@@ -34,7 +31,6 @@
             box-shadow: 0 0 14px 4px #3b82f6bb;
         }
 
-    /* Slight glow for outline-light (white) buttons */
     .btn-outline-light, .btn-outline-light:focus {
         box-shadow: 0 0 6px 1px #ffffff55;
         border-color: #fff;
@@ -62,6 +58,17 @@
                     <label asp-for="Title" class="form-label"></label>
                     <input asp-for="Title" class="form-control bg-secondary text-light border-0" />
                     <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Category" class="form-label"></label>
+                    <input asp-for="Category" class="form-control bg-secondary text-light border-0" />
+                    <span asp-validation-for="Category" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Priority" class="form-label"></label>
+                    <select asp-for="Priority" class="form-select bg-secondary text-light border-0"
+                            asp-items="Html.GetEnumSelectList<Todoapp.Models.Priority>()"></select>
+                    <span asp-validation-for="Priority" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Status" class="form-label"></label>

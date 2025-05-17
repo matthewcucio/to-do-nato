@@ -22,15 +22,13 @@ namespace Todoapp.Controllers
             _logger = logger;
         }
 
-        // --- DTO CLASS FOR AJAX STATUS UPDATE ---
         public class StatusUpdateDto
         {
             public string Status { get; set; }
         }
 
-        // --- ENDPOINT FOR AJAX STATUS UPDATE ---
         [HttpPost]
-        [IgnoreAntiforgeryToken] // For AJAX, or handle the token properly
+        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] StatusUpdateDto dto)
         {
             var item = await _context.ToDoItemModels.FindAsync(id);
@@ -44,7 +42,6 @@ namespace Todoapp.Controllers
             return Json(new { success = true });
         }
 
-        // --- ENDPOINT FOR CLEAR ALL ---
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ClearAll()
@@ -55,9 +52,29 @@ namespace Todoapp.Controllers
         }
 
         // GET: ToDoItemModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string category, Priority? priority, string sortOrder)
         {
-            return View(await _context.ToDoItemModels.ToListAsync());
+            var items = from t in _context.ToDoItemModels select t;
+
+            if (!string.IsNullOrEmpty(category))
+                items = items.Where(t => t.Category == category);
+
+            if (priority.HasValue)
+                items = items.Where(t => t.Priority == priority);
+
+            items = sortOrder switch
+            {
+                "category" => items.OrderBy(t => t.Category),
+                "priority" => items.OrderBy(t => t.Priority),
+                _ => items.OrderBy(t => t.Id)
+            };
+
+            ViewBag.Categories = _context.ToDoItemModels.Select(t => t.Category).Distinct().ToList();
+            ViewBag.CurrentCategory = category;
+            ViewBag.CurrentPriority = priority;
+            ViewBag.CurrentSort = sortOrder;
+
+            return View(await items.ToListAsync());
         }
 
         // GET: ToDoItemModels/Details/5
@@ -81,13 +98,14 @@ namespace Todoapp.Controllers
         // GET: ToDoItemModels/Create
         public IActionResult Create()
         {
+            ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)));
             return View();
         }
 
         // POST: ToDoItemModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Status,Deadline,Description")] ToDoItemModel toDoItemModel)
+        public async Task<IActionResult> Create([Bind("Id,Title,Status,Deadline,Description,Category,Priority")] ToDoItemModel toDoItemModel)
         {
             if (ModelState.IsValid)
             {
@@ -95,6 +113,7 @@ namespace Todoapp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)));
             return View(toDoItemModel);
         }
 
@@ -111,13 +130,14 @@ namespace Todoapp.Controllers
             {
                 return NotFound();
             }
+            ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)));
             return View(toDoItemModel);
         }
 
         // POST: ToDoItemModels/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Status,Deadline,Description")] ToDoItemModel toDoItemModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Status,Deadline,Description,Category,Priority")] ToDoItemModel toDoItemModel)
         {
             if (id != toDoItemModel.Id)
             {
@@ -145,6 +165,7 @@ namespace Todoapp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.PriorityList = new SelectList(Enum.GetValues(typeof(Priority)));
             return View(toDoItemModel);
         }
 

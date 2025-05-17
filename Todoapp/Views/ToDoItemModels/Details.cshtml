@@ -10,19 +10,16 @@
         min-height: 100vh;
     }
 
-    /* Subtle green glow for the title */
     .glow-green {
         color: #22c55e;
         text-shadow: 0 0 6px #22c55e88, 0 0 12px #22c55e44;
         font-weight: bold;
     }
 
-    /* Make table headers and description title bold */
     th, .details-label, .desc-title {
         font-weight: bold !important;
     }
 
-    /* Slight glow for primary (blue) buttons */
     .btn-primary, .btn-primary:focus {
         box-shadow: 0 0 6px 1px #2563eb55;
         border-color: #2563eb;
@@ -36,7 +33,6 @@
             box-shadow: 0 0 14px 4px #3b82f6bb;
         }
 
-    /* Slight glow for outline-light (white) buttons */
     .btn-outline-light, .btn-outline-light:focus {
         box-shadow: 0 0 6px 1px #ffffff55;
         border-color: #fff;
@@ -63,6 +59,18 @@
                 </dt>
                 <dd class="col-sm-8">
                     @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Priority)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Priority)
                 </dd>
                 <dt class="col-sm-4 details-label">
                     @Html.DisplayNameFor(model => model.Status)
