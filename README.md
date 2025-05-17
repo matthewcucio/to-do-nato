@@ -13,3 +13,9 @@ This is a simple To-Do list application built using ASP.NET MVC and C#. The app 
 - Controllers: Contains the main controller (HomeController.cs) that handles all the user requests. 🧑‍💻
 - Models: Contains the Task model (Task.cs). 🏷️
 - Views: Contains Razor views for displaying the tasks and interacting with the user. 👩‍💻
+
+ScreenShots:
+
+![image](https://github.com/user-attachments/assets/56e1fb19-736a-4eec-aed8-817c9e2d7f48)
+
+![image](https://github.com/user-attachments/assets/2d8f42a6-c560-4dc0-a5b2-fada5a7bd617)
