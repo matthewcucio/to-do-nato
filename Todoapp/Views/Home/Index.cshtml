@@ -6,8 +6,9 @@
     body {
         margin: 0;
         padding: 0;
-        background: linear-gradient(135deg, #18181b 0%, #1e293b 100%), no-repeat center center fixed;
-        background-size: cover;
+        background: url('/images/HomePage2.svg') no-repeat center center;
+        background-size: cover, cover;
+        background-attachment: scroll;
         color: white;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
@@ -53,7 +54,7 @@
     .description {
         font-size: 1.1rem;
         margin-top: 2rem;
-        color: #d1d5db;
+        color: white;
         line-height: 1.6;
     }
 
@@ -102,7 +103,7 @@
             <div class="description">
                 ToDoNa is your ultimate personal productivity assistant — designed to help you organize your tasks, stay on top of deadlines, and never miss a thing.
             </div>
-            <a asp-controller="ToDoItemModels" asp-action="Index" class="btn-blue">GO TO TO DO LIST</a>
+            <a asp-controller="ToDoItemModels" asp-action="Index" class="btn-blue">GO TO YOUR LIST</a>
         </div>
     </div>
 </div>
