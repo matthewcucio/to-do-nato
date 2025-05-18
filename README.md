@@ -12,6 +12,8 @@ This is a simple To-Do list application built using ASP.NET MVC and C#. The app 
 # 🏗️ MVC Architecture
 
     Model: Represents the To-Do task object with properties like ID, Title, Description, and IsCompleted.
+    View: Views display the tasks and provide the user interface for managing them (Add, Edit, Delete, etc.). 👀
+    Controller: The controller handles the business logic, such as adding, editing, deleting tasks, and interacting with the model. 🎮
     
 # 📂 Project Structure
 - Controllers: Contains the main controller (HomeController.cs) that handles all the user requests. 🧑‍💻
