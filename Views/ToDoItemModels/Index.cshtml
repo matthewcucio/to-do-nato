@@ -1,0 +1,250 @@
+﻿@model IEnumerable<Todoapp.Models.ToDoItemModel>
+@using Todoapp.Models
+
+@{
+    ViewData["Title"] = "Index";
+    var categories = ViewBag.Categories as List<string>;
+    var currentCategory = ViewBag.CurrentCategory as string;
+    var currentPriority = ViewBag.CurrentPriority as Priority?;
+    var currentSort = ViewBag.CurrentSort as string;
+}
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg bg-dark text-light w-100" style="max-width: 900px;">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4" style="font-weight:bold;">Your To Do List</h1>
+            <div class="row mb-3">
+                <div class="col text-start">
+                    <a asp-action="Create" class="btn btn-primary btn-lg" style="transition: background 0.2s; font-weight:bold;">Create New</a>
+                </div>
+                <div class="col text-end">
+                    <form asp-action="ClearAll" method="post" id="clearAllForm" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-lg" style="transition: background 0.2s; font-weight:bold;">Clear All</button>
+                    </form>
+                </div>
+            </div>
+            <!-- Filter/Sort Form moved below the buttons -->
+            <form method="get" class="mb-4 text-center">
+                <select name="category" class="filter-select mx-1">
+                    <option value="">All Categories</option>
+                    @if (categories != null)
+                    {
+                        foreach (var cat in categories)
+                        {
+                            <option value="@cat" selected="@(currentCategory == cat)">
+                                @cat
+                            </option>
+                        }
+                    }
+                </select>
+                <select name="priority" class="filter-select mx-1">
+                    <option value="">All Priorities</option>
+                    @foreach (var prio in Enum.GetValues(typeof(Priority)).Cast<Priority>())
+                    {
+                        <option value="@prio" selected="@(currentPriority == prio)">
+                            @prio
+                        </option>
+                    }
+                </select>
+                <select name="sortOrder" class="filter-select mx-1">
+                    <option value="">Sort by...</option>
+                    <option value="category" selected="@(currentSort == "category")">Category</option>
+                    <option value="priority" selected="@(currentSort == "priority")">Priority</option>
+                    <option value="date" selected="@(currentSort == "date")">Date</option>
+                </select>
+                <button type="submit" class="btn btn-glow-apply mx-1">Apply</button>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-dark table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th style="font-weight:bold;">@Html.DisplayNameFor(model => model.Title)</th>
+                            <th style="font-weight:bold;">@Html.DisplayNameFor(model => model.Status)</th>
+                            <th style="font-weight:bold;">Category</th>
+                            <th style="font-weight:bold;">Priority</th>
+                            <th style="font-weight:bold;">Deadline</th>
+                            <th class="text-center" style="font-weight:bold;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="@(item.Status == Status.Completed ? "completed-task" : "")">
+                                <td>
+                                    <input type="checkbox" class="status-checkbox form-check-input"
+                                           data-id="@item.Id"
+                                           @(item.Status == Status.Completed ? "checked" : "") />
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td>@item.Category</td>
+                                <td>@item.Priority</td>
+                                <td>@item.Deadline?.ToString("yyyy-MM-dd")</td>
+                                <td class="text-center">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm" style="font-weight:bold;">Edit</a>
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success btn-sm" style="font-weight:bold;">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" style="font-weight:bold;">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Checkbox status update
+        document.querySelectorAll('.status-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const taskId = this.getAttribute('data-id');
+                const isChecked = this.checked;
+                const row = this.closest('tr');
+                if (isChecked) {
+                    row.classList.add('completed-task');
+                } else {
+                    row.classList.remove('completed-task');
+                }
+                fetch(`/ToDoItemModels/UpdateStatus/${taskId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    },
+                    body: JSON.stringify({ status: isChecked ? 'Completed' : 'Ongoing' })
+                }).then(response => {
+                    if (!response.ok) {
+                        alert('Failed to update status.');
+                    }
+                });
+            });
+        });
+
+        // Clear All confirmation
+        document.getElementById('clearAllForm').addEventListener('submit', function (e) {
+            if (!confirm('Are you sure you want to clear all to-do items? This action cannot be undone.')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url('/images/ToDoList Background.svg') no-repeat center center, linear-gradient(135deg, #232526 0%, #414345 100%);
+        background-size: cover, cover;
+        background-attachment: scroll;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .completed-task td {
+        text-decoration: line-through;
+        opacity: 0.6;
+    }
+
+        .completed-task td a {
+            text-decoration: none;
+        }
+
+    .btn-primary, .btn-primary:focus {
+        box-shadow: 0 0 6px 1px #2563eb55;
+        border-color: #2563eb;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            filter: brightness(1.18);
+            background-color: #3b82f6 !important;
+            box-shadow: 0 0 14px 4px #3b82f6bb;
+        }
+
+    .btn-success, .btn-success:focus {
+        box-shadow: 0 0 6px 1px #05966955;
+        border-color: #059669;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-success:hover {
+            filter: brightness(1.18);
+            background-color: #22c55e !important;
+            box-shadow: 0 0 14px 4px #22c55ebb;
+        }
+
+    .btn-danger, .btn-danger:focus {
+        box-shadow: 0 0 6px 1px #dc262655;
+        border-color: #dc2626;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-danger:hover {
+            filter: brightness(1.18);
+            background-color: #ef4444 !important;
+            box-shadow: 0 0 14px 4px #ef4444bb;
+        }
+
+    .btn-outline-light, .btn-outline-light:focus {
+        box-shadow: 0 0 6px 1px #ffffff55;
+        border-color: #fff;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-outline-light:hover {
+            filter: brightness(1.18);
+            box-shadow: 0 0 14px 4px #ffffffbb;
+            background: #fff !important;
+            color: #232526 !important;
+        }
+
+    /* Filter/Sort Selects and Apply Button Styles */
+    .filter-select {
+        background: #232a3b;
+        color: #fff;
+        border: 1.5px solid #2563eb;
+        border-radius: 0.35rem;
+        padding: 0.5rem 1.2rem;
+        font-weight: bold;
+        box-shadow: 0 0 6px 1px #2563eb33;
+        transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+        outline: none;
+    }
+
+        .filter-select:focus, .filter-select:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 0 12px 2px #3b82f6bb;
+            background: #1e293b;
+            color: #fff;
+        }
+
+    .btn-glow-apply {
+        background: #2563eb;
+        color: #fff;
+        font-weight: bold;
+        border: none;
+        border-radius: 0.35rem;
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        box-shadow: 0 0 8px 2px #2563eb55;
+        transition: background 0.2s, box-shadow 0.2s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+        .btn-glow-apply:hover, .btn-glow-apply:focus {
+            background: #3b82f6;
+            box-shadow: 0 0 16px 4px #3b82f6bb;
+            color: #fff;
+        }
+</style>

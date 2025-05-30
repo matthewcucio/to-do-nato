@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<style>
+    body {
+     
+        min-height: 100vh;
+        background: url('/images/Privacy Policy Background.svg') no-repeat center center, linear-gradient(135deg, #232526 0%, #414345 100%);
+        background-size: cover, cover;
+        background-attachment: scroll;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+    }
+
+    .privacy-card {
+        max-width: 700px;
+        margin: 0 auto;
+        background: #181a1b;
+        border-radius: 1rem;
+        box-shadow: 0 8px 32px 0 #00000040;
+        padding: 2.5rem 2rem;
+    }
+
+    .glow-blue {
+        color: #2563eb;
+        text-shadow: 0 0 6px #2563eb88, 0 0 12px #2563eb44;
+        font-weight: bold;
+    }
+
+    .privacy-section-title {
+        color: #3b82f6;
+        font-weight: bold;
+        margin-top: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .privacy-text {
+        color: #e0e7ef;
+        font-size: 1.05rem;
+        margin-bottom: 1.2rem;
+    }
+
+</style>
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="privacy-card text-light">
+        <h1 class="glow-blue text-center mb-4">@ViewData["Title"]</h1>
+        <p class="privacy-text">
+            Your privacy is important to us. This Privacy Policy explains how your personal information is collected, used, and protected when you use this To Do App.
+        </p>
+
+        <div class="privacy-section-title">1. Information We Collect</div>
+        <p class="privacy-text">
+            We may collect information you provide directly to us, such as your name, email address, and any data you enter into the to-do list. We also collect basic usage data, such as IP address, browser type, and access times, to improve our services.
+        </p>
+
+        <div class="privacy-section-title">2. How We Use Your Information</div>
+        <p class="privacy-text">
+            Your information is used to provide, maintain, and improve the app’s functionality. We do not sell or share your personal information with third parties except as required by law or to protect our rights.
+        </p>
+
+        <div class="privacy-section-title">3. Data Security</div>
+        <p class="privacy-text">
+            We implement reasonable security measures to protect your information from unauthorized access, alteration, or disclosure. However, no method of transmission over the Internet or electronic storage is 100% secure.
+        </p>
+
+        <div class="privacy-section-title">4. Cookies</div>
+        <p class="privacy-text">
+            This app may use cookies to enhance your experience. You can choose to disable cookies through your browser settings, but some features of the app may not function properly.
+        </p>
+
+        <div class="privacy-section-title">5. Third-Party Services</div>
+        <p class="privacy-text">
+            We do not share your information with third-party services except as necessary to provide the app’s core functionality or as required by law.
+        </p>
+
+        <div class="privacy-section-title">6. Changes to This Policy</div>
+        <p class="privacy-text">
+            We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date.
+        </p>
+
+        <div class="privacy-section-title">7. Contact Us</div>
+        <p class="privacy-text">
+            If you have any questions or concerns about this Privacy Policy, please contact us through the information provided on the app.
+        </p>
+
+        <hr class="border-secondary my-4" />
+        <p class="mb-0" style="color:#b0b8c1; font-size:0.95rem;">
+            Effective Date: May 16, 2025
+        </p>
+    </div>
+</div>

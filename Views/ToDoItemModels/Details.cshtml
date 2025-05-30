@@ -1,0 +1,103 @@
+﻿@model Todoapp.Models.ToDoItemModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: url('/images/Details Background.svg') no-repeat center center, linear-gradient(135deg, #232526 0%, #414345 100%);
+        background-size: cover, cover;
+        background-attachment: scroll;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .glow-green {
+        color: #22c55e;
+        text-shadow: 0 0 6px #22c55e88, 0 0 12px #22c55e44;
+        font-weight: bold;
+    }
+
+    th, .details-label, .desc-title {
+        font-weight: bold !important;
+    }
+
+    .btn-primary, .btn-primary:focus {
+        box-shadow: 0 0 6px 1px #2563eb55;
+        border-color: #2563eb;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-primary:hover {
+            filter: brightness(1.18);
+            background-color: #3b82f6 !important;
+            box-shadow: 0 0 14px 4px #3b82f6bb;
+        }
+
+    .btn-outline-light, .btn-outline-light:focus {
+        box-shadow: 0 0 6px 1px #ffffff55;
+        border-color: #fff;
+        transition: filter 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+        font-weight: bold;
+    }
+
+        .btn-outline-light:hover {
+            filter: brightness(1.18);
+            box-shadow: 0 0 14px 4px #ffffffbb;
+            background: #fff !important;
+            color: #232526 !important;
+        }
+</style>
+
+<div class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg bg-dark text-light w-100" style="max-width: 500px;">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4 glow-green">Details</h1>
+            <hr class="border-secondary" />
+            <dl class="row">
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Category)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Priority)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Priority)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Status)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Status)
+                </dd>
+                <dt class="col-sm-4 details-label">
+                    @Html.DisplayNameFor(model => model.Deadline)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Deadline)
+                </dd>
+            </dl>
+            <div class="mb-4">
+                <h4 class="desc-title">Description</h4>
+                <p>@Model.Description</p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+                <a asp-action="Index" class="btn btn-outline-light">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
